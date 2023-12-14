@@ -1,5 +1,6 @@
 package controller;
 
+import database.ConnectDB;
 import model.User;
 
 public class UserController {
@@ -24,7 +25,10 @@ public class UserController {
 	}
 
 	public static void registerUser(String name, String pass, String coPass, int age) {
-			if(name.length() < 7) {
+		ConnectDB db = ConnectDB.getInstance();
+		int count = db.checkRow();
+		
+		if(name.length() < 7) {
 				System.err.println("Name must be 7 or more characters");
 				return;
 			}
@@ -48,7 +52,6 @@ public class UserController {
 				System.err.println("Age have to be between 13 and 65");
 				return;
 			}
-			
-			User.create(new User(name, pass, coPass, age));
+			User.create(new User(count, name, pass, coPass, age));
 	}
 }

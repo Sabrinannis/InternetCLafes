@@ -31,9 +31,11 @@ public class ConnectDB {
 		int ct = 0;
 		ResultSet count;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM 'userclafes'");
+			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS 'count' FROM userclafes");
 			count = ps.executeQuery();
-			ct = count.getInt("count(*)");
+			if(count.next()){
+				ct = count.getInt("count");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

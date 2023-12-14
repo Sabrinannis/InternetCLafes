@@ -31,7 +31,7 @@ public class RegisterPageUser extends Application {
 	Hyperlink hplink;
 	MenuBar menuBar;
 	Menu menu;
-	MenuItem menu_itm;
+	MenuItem menuToLogin;
 	
 	Label TitleForm, h2lb, lb_UserName, lb_Password, lb_ConfirmPass, lb_UserAge;
 	TextField tf_UserName;
@@ -42,10 +42,9 @@ public class RegisterPageUser extends Application {
 	private void initializeMenu() {
 		menuBar = new MenuBar();
 		menu = new Menu("Get In Method");
-		menu_itm = new MenuItem("Login");
-		menuBar.getMenus().add(menu)
-;
-		menu.getItems().add(menu_itm);
+		menuToLogin = new MenuItem("Login");
+		menuBar.getMenus().add(menu);
+		menu.getItems().add(menuToLogin);
 	}
 	
 	private void initialize() {
@@ -53,7 +52,7 @@ public class RegisterPageUser extends Application {
 		vbox = new VBox();
 		gpane = new GridPane();
 		
-		TitleForm = new Label("Welcome");
+		TitleForm = new Label("REGISTER PAGE");
 		h2lb = new Label("Start your account here!");
 		
 		//Username Input
@@ -68,7 +67,7 @@ public class RegisterPageUser extends Application {
 		lb_ConfirmPass = new Label("Confirm Password: ");
 		pf_ConfirmPass = new PasswordField();
 		
-		//age spiner
+		//age spinner
 		lb_UserAge = new Label("Age: ");
 		sp_UserAge = new Spinner<>(13, 65, 13);
 		
@@ -101,8 +100,35 @@ public class RegisterPageUser extends Application {
 		
 		bpane.setTop(menuBar);
 		bpane.setCenter(gpane);
-		scene = new Scene(bpane,900, 400);
-
+		scene = new Scene(bpane,900, 500);
+		System.out.println("Berhasil sini");
+		
+	}
+	
+	
+	public void handling() {
+		btn_submit.setOnAction(e->{
+			UserController.registerUser(
+					tf_UserName.getText(), pf_Password.getText(), 
+					pf_ConfirmPass.getText(), sp_UserAge.getValue()
+				);
+			new LoginPageUser(stage);
+		});
+		
+		menuToLogin.setOnAction(e->{
+			try {
+		        new LoginPageUser(stage);
+		        stage.show();  // Make the stage visible
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
+		    }
+		});
+	}
+	
+	private void setStyle() {
+		TitleForm.setStyle("-fx-font-weight: bold;" + "-fx-font-family: Serif;" + "-fx-font-size: 36px;");
+		h2lb.setStyle("-fx-font-family: Serif;" + "-fx-font-size: 20px;" + "-fx-text-fill:grey;");
+		btn_submit.setStyle("-fx-background-color: red;" + "-fx-text-fill: white;" + "-fx-width: 350px;" + "-fx-font-weight: bold;");
 	}
 	
 	
@@ -110,7 +136,8 @@ public class RegisterPageUser extends Application {
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
 		initialize();
-		setAction();
+		setStyle();
+		handling();
 		this.stage = stage;
 		this.stage.setScene(scene);
 		this.stage.show();
@@ -120,12 +147,5 @@ public class RegisterPageUser extends Application {
 		launch(args);
 	}
 	
-	public void setAction() {
-		this.btn_submit.setOnAction(event->{
-			UserController.registerUser(
-					tf_UserName.getText(), pf_Password.getText(), 
-					pf_ConfirmPass.getText(), sp_UserAge.getValue()
-				);
-		});
-	}
+	
 }

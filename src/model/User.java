@@ -1,18 +1,12 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import database.ConnectDB;
-import database.Constants;
 
 public class User {
-	private static Integer ct;
-	private static AtomicInteger count; 
+	private static AtomicInteger counts; 
 	private static int UserID;
 	private String UserName;
 	private String Password;
@@ -21,10 +15,10 @@ public class User {
 	
 	
 	
-	public User(String userName, String password, String confirmPass, Integer userAge) {
+	public User(int count, String userName, String password, String confirmPass, Integer userAge) {
 		super();
-		count  = new AtomicInteger(0);
-		UserID = count.incrementAndGet();
+		counts  = new AtomicInteger(count);
+		UserID = counts.incrementAndGet();
 		UserName = userName;
 		Password = password;
 		ConfirmPass = confirmPass;
