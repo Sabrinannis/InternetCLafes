@@ -42,6 +42,50 @@ public class ConnectDB {
 		}
 		return ct;
 	}
+	
+	public boolean checkUsername(String username) {
+		boolean usernameExists = false;
+		PreparedStatement st;
+		
+		try {
+			st = connection.prepareStatement("SELECT * FROM userclafes");
+			ResultSet names = st.executeQuery();
+			String usernameCounter;
+			while(names.next()) {
+				usernameCounter =  names.getString("UserName");
+				
+				if(usernameCounter.equals(username)) {
+					usernameExists = true;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    return usernameExists;
+	}
+	
+	public boolean checkPassword(String pass) {
+		boolean passwordSame = false;
+		PreparedStatement st;
+		
+		try {
+			st = connection.prepareStatement("SELECT * FROM userclafes");
+			ResultSet passw = st.executeQuery();
+			String passwordCounter;
+			while(passw.next()) {
+				passwordCounter =  passw.getString("Password");
+				
+				if(passwordCounter.equals(pass)) {
+					passwordSame = true;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    return passwordSame;
+	}
 
 	public <T> Vector<T> executePrepQuery(String query, StatementPreparer preparer, ResultSetParser<T> parser) {
 		try {

@@ -19,17 +19,23 @@ public class UserController {
 	}
 	
 	public static void login(String name, String pass) {
-//		if (User.checkUsernameAndPassword(name, pass)) {
-//			
-//		}
+		if (User.checkUsernameAndPassword(name, pass)) {
+			// pindah ke home
+			System.out.println("You're logged in");
+		}
 	}
 
 	public static void registerUser(String name, String pass, String coPass, int age) {
 		ConnectDB db = ConnectDB.getInstance();
 		int count = db.checkRow();
 		
-		if(name.length() < 7) {
+			if(name.length() < 7) {
 				System.err.println("Name must be 7 or more characters");
+				return;
+			}
+			
+			if(db.checkUsername(name)) {
+				System.err.println("Name already exists");
 				return;
 			}
 			
@@ -52,6 +58,7 @@ public class UserController {
 				System.err.println("Age have to be between 13 and 65");
 				return;
 			}
+			
 			User.create(new User(count, name, pass, coPass, age));
 	}
 }

@@ -1,5 +1,6 @@
 package view;
 
+import controller.UserController;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -81,9 +82,11 @@ public class LoginPageUser {
 	
 	public void setAction() {
 		login_btn.setOnMouseClicked(event -> {
-			if (this.username_fl.getText().equals("bypass"))
-//				StageManager.getInstance().setScene(new HomeView().getScene());
-			System.out.println("User login, and redirect user");
+//			if (this.username_fl.getText().equals("bypass"))
+////				StageManager.getInstance().setScene(new HomeView().getScene());
+//			System.out.println("User login, and redirect user");
+			
+			UserController.login(username_fl.getText(), password_pf.getText());
 		});
 		
 		menuToRegister.setOnAction(e->{

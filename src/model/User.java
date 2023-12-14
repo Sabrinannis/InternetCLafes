@@ -57,6 +57,15 @@ public class User {
 		UserAge = userAge;
 	}
 	
+	public static boolean checkUsernameAndPassword(String name, String pass){
+		ConnectDB db = ConnectDB.getInstance();
+		boolean registered = false;
+		if(db.checkUsername(name) && db.checkPassword(pass)) {
+			registered = true;
+		}
+		
+		return registered;
+	}
 
 	public static void create(User user) {
 		// TODO Auto-generated method stub			
