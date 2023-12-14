@@ -54,7 +54,7 @@ public class LoginPageUser {
 		this.login_btn.setOnMouseClicked(event -> {
 			if (this.username_fl.getText().equals("bypass"))
 //				StageManager.getInstance().setScene(new HomeView().getScene());
-			System.out.println("User login, and redirect user to home");
+			System.out.println("User login, and redirect user");
 		});
 	}
 
