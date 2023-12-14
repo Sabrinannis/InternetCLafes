@@ -29,8 +29,18 @@ public class UserController {
 				return;
 			}
 			
-			if(!isAlphanumeric(pass) || pass.length() < 6 || !pass.equals(coPass)) {
-				System.err.println("Password is not alphanumeric and too short(minimal length 6) or doesnt match confirmation pass");
+			if(!isAlphanumeric(pass)) {
+				System.err.println("Password is not alphanumeric");
+				return;
+			}
+			
+			if(pass.length() < 6) {
+				System.err.println("Password is too short(minimal length 6)");
+				return;
+			}
+			
+			if(!pass.equals(coPass)) {
+				System.err.println("Password doesn't match confirmation pass");
 				return;
 			}
 			

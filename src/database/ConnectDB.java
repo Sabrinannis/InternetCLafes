@@ -3,6 +3,7 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -24,6 +25,20 @@ public class ConnectDB {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Integer checkRow() {
+		int ct = 0;
+		ResultSet count;
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM 'userclafes'");
+			count = ps.executeQuery();
+			ct = count.getInt("count(*)");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ct;
 	}
 
 	public <T> Vector<T> executePrepQuery(String query, StatementPreparer preparer, ResultSetParser<T> parser) {
