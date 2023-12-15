@@ -25,40 +25,41 @@ public class UserController {
 		}
 	}
 
-	public static void registerUser(String name, String pass, String coPass, int age) {
+	public static String registerUser(String name, String pass, String coPass, int age) {
 		ConnectDB db = ConnectDB.getInstance();
 		int count = db.checkRow();
 		
 			if(name.length() < 7) {
 				System.err.println("Name must be 7 or more characters");
-				return;
+				return "Name must be 7 or more characters";
 			}
 			
 			if(db.checkUsername(name)) {
 				System.err.println("Name already exists");
-				return;
+				return "Name already exists";
 			}
 			
 			if(!isAlphanumeric(pass)) {
 				System.err.println("Password is not alphanumeric");
-				return;
+				return "Password is not alphanumeric";
 			}
 			
 			if(pass.length() < 6) {
 				System.err.println("Password is too short(minimal length 6)");
-				return;
+				return "Password is too short(minimal length 6)";
 			}
 			
 			if(!pass.equals(coPass)) {
 				System.err.println("Password doesn't match confirmation pass");
-				return;
+				return "Password doesn't match confirmation pass";
 			}
 			
 			if(age < 13 || age > 65) {
 				System.err.println("Age have to be between 13 and 65");
-				return;
+				return "Age have to be between 13 and 65";
 			}
 			
 			User.create(new User(count, name, pass, coPass, age));
+			return "Success";
 	}
 }

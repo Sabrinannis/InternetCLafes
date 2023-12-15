@@ -71,12 +71,11 @@ public class User {
 		// TODO Auto-generated method stub			
 		ConnectDB db = ConnectDB.getInstance();
 		
-		db.executePrepUpdate("INSERT INTO userclafes (UserID, UserName, Password, ConfirmPass, UserAge) VALUES (?, ?, ?, ?, ?)", preparedStatement->{
+		db.executePrepUpdate("INSERT INTO userclafes (UserName, Password, ConfirmPass, UserAge) VALUES (?, ?, ?, ?)", preparedStatement->{
 			try {
-				preparedStatement.setInt(1, UserID);
-				preparedStatement.setString(2, user.getUserName());
-				preparedStatement.setString(3, user.getPassword());
-				preparedStatement.setString(4, user.getConfirmPass());
+				preparedStatement.setString(1, user.getUserName());
+				preparedStatement.setString(2, user.getPassword());
+				preparedStatement.setString(3, user.getConfirmPass());
 				preparedStatement.setInt(5, user.getUserAge());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

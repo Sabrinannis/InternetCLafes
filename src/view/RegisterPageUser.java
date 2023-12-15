@@ -4,6 +4,8 @@ import controller.UserController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -107,15 +109,23 @@ public class RegisterPageUser extends Application {
 	
 	
 	public void handling() {
+		Alert a = new Alert(AlertType.NONE);
+		 
 		btn_submit.setOnAction(e->{
-			UserController.registerUser(
+			String message = UserController.registerUser(
 					tf_UserName.getText(), pf_Password.getText(), 
 					pf_ConfirmPass.getText(), sp_UserAge.getValue()
 				);
-			new LoginPageUser(stage);
+			if(message.equals("Success")) {
+				new LoginPageUser(stage);		
+			}else {
+				a.setAlertType(AlertType.ERROR);
+				a.setContentText("Registration Error");
+				a.show();	
+			}
 		});
 		
-		menuToLogin.setOnAction(e->{
+		menuToLogin.setOnAction(e->{	
 			try {
 		        new LoginPageUser(stage);
 		        stage.show();  // Make the stage visible
