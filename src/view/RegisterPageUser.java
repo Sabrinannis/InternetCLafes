@@ -4,21 +4,9 @@ import controller.UserController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class RegisterPageUser extends Application {
@@ -35,10 +23,11 @@ public class RegisterPageUser extends Application {
 	Menu menu;
 	MenuItem menuToLogin;
 	
-	Label TitleForm, h2lb, lb_UserName, lb_Password, lb_ConfirmPass, lb_UserAge;
+	Label TitleForm, h2lb, lb_UserName, lb_Password, lb_ConfirmPass, lb_UserAge, lb_UserRole;
 	TextField tf_UserName;
 	PasswordField pf_Password, pf_ConfirmPass;
 	Spinner<Integer> sp_UserAge;
+	ComboBox<String> cb_UserRole;
 	Button btn_submit;
 	
 	private void initializeMenu() {
@@ -73,6 +62,11 @@ public class RegisterPageUser extends Application {
 		lb_UserAge = new Label("Age: ");
 		sp_UserAge = new Spinner<>(13, 65, 13);
 		
+		//choose role
+		lb_UserRole = new Label("Role: ");
+		cb_UserRole = new ComboBox<>();
+		cb_UserRole.getItems().addAll("Admin", "Customer", "Operator", "Computer Technician");
+		
 		btn_submit = new Button("Register");
 		
 		initializeMenu();
@@ -94,7 +88,10 @@ public class RegisterPageUser extends Application {
 		gpane.add(lb_UserAge, 0, 4);
 		gpane.add(sp_UserAge, 1, 4);
 		
-		gpane.add(btn_submit, 0, 5);
+		gpane.add(lb_UserRole, 0, 5);
+		gpane.add(cb_UserRole, 1, 5);
+		
+		gpane.add(btn_submit, 0, 6);
 		
 		gpane.setVgap(12);
 		
@@ -110,11 +107,12 @@ public class RegisterPageUser extends Application {
 	
 	public void handling() {
 		Alert a = new Alert(AlertType.NONE);
-		 
+		
 		btn_submit.setOnAction(e->{
 			String message = UserController.registerUser(
 					tf_UserName.getText(), pf_Password.getText(), 
-					pf_ConfirmPass.getText(), sp_UserAge.getValue()
+					pf_ConfirmPass.getText(), sp_UserAge.getValue(),
+					cb_UserRole.getSelectionModel().getSelectedItem()
 				);
 			if(message.equals("Success")) {
 				new LoginPageUser(stage);		
@@ -125,7 +123,7 @@ public class RegisterPageUser extends Application {
 			}
 		});
 		
-		menuToLogin.setOnAction(e->{	
+		menuToLogin.setOnAction(e->{
 			try {
 		        new LoginPageUser(stage);
 		        stage.show();  // Make the stage visible
