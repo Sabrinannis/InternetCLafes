@@ -25,7 +25,7 @@ public class UserController {
 		}
 	}
 
-	public static String registerUser(String name, String pass, String coPass, int age) {
+	public static String registerUser(String name, String pass, String coPass, int age, String role) {
 		ConnectDB db = ConnectDB.getInstance();
 		int count = db.checkRow();
 		
@@ -59,7 +59,7 @@ public class UserController {
 				return "Age have to be between 13 and 65";
 			}
 			
-			User.create(new User(count, name, pass, coPass, age));
+			User.create(new User(count, name, pass, age, role));
 			return "Success";
 	}
 }
